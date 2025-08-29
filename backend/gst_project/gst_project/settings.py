@@ -137,6 +137,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 
+CORS_ALLOW_ALL_ORIGINS = True  # ⚠️ Only during development!
+
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:60043",  # The origin of your Flutter web app
+    "http://localhost:60043", # Your Flutter web app's origin
 ]

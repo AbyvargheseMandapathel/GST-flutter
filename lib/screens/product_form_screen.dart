@@ -64,7 +64,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
         } else {
           await ApiService().updateProduct(widget.product!.id, productData);
         }
-        Navigator.of(context).pop(true);
+        Navigator.of(context).pop(true); // Pop with true to indicate a change
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: $e')),
@@ -96,34 +96,42 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 decoration: const InputDecoration(labelText: 'Name'),
                 validator: (value) => value!.isEmpty ? 'Please enter a name' : null,
               ),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: _descriptionController,
                 decoration: const InputDecoration(labelText: 'Description'),
+                maxLines: 3,
                 validator: (value) => value!.isEmpty ? 'Please enter a description' : null,
               ),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: _priceController,
-                decoration: const InputDecoration(labelText: 'Price'),
+                decoration: const InputDecoration(labelText: 'Price (INR)'),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 validator: (value) => value!.isEmpty || double.tryParse(value) == null ? 'Please enter a valid price' : null,
               ),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: _stockController,
                 decoration: const InputDecoration(labelText: 'Stock'),
                 keyboardType: TextInputType.number,
                 validator: (value) => value!.isEmpty || int.tryParse(value) == null ? 'Please enter a valid stock value' : null,
               ),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: _imageController,
-                decoration: const InputDecoration(labelText: 'Image Path (e.g., /media/image.png)'),
+                decoration: const InputDecoration(labelText: 'Image Path (e.g., /media/products/item.jpg)'),
                 validator: (value) => value!.isEmpty ? 'Please enter an image path' : null,
               ),
               const SizedBox(height: 20),
               _isLoading
                   ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _saveProduct,
-                      child: Text(widget.product == null ? 'Add Product' : 'Update Product'),
+                  : SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _saveProduct,
+                        child: Text(widget.product == null ? 'Add Product' : 'Update Product'),
+                      ),
                     ),
             ],
           ),
